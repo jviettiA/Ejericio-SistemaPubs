@@ -11,7 +11,7 @@ namespace Datos.Servidor
     {
         internal static SqlConnection ConectarBaseDatos() {
 
-            string cadena = "";
+            string cadena = Datos.Properties.Settings.Default.KeyDB;
             SqlConnection connection = new SqlConnection(cadena);
             connection.Open();
             return connection;
