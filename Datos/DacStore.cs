@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Models;
 using System.Data.SqlClient;
 using Datos.Servidor;
+using System.Data;
 
 namespace Datos
 {
@@ -91,5 +92,52 @@ namespace Datos
 
             return filasAfectadas;
         }
+
+        public static DataSet ListarDS() 
+        {
+
+            string SQLSelect = "SELECT stor_id, stor_name, stor_address, city, state, zip FROM stores";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(SQLSelect, AdminDB.ConectarBaseDatos());
+
+            DataSet ds = new DataSet();
+
+            adapter.Fill(ds,"Stores");
+
+            return ds;
+        }
+
+        public static DataTable ListarDT(string zip) 
+        {
+
+            string SQLSelect = "SELECT stor_id, stor_name, stor_address, city, state, zip FROM stores WHERE zip = @zip";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(SQLSelect, AdminDB.ConectarBaseDatos());
+
+            adapter.SelectCommand.Parameters.Add("@zip", SqlDbType.Char, 5).Value = zip;
+
+            DataSet ds = new DataSet();
+
+            adapter.Fill(ds, "Stores");
+
+            return ds.Tables["Stores"];
+
+
+        }
+
+        public static DataTable ListarZip() 
+        {
+
+            string SQLSelect = "SELECT DISTINCT zip FROM stores";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(SQLSelect, AdminDB.ConectarBaseDatos());
+
+            DataSet ds = new DataSet();
+
+            adapter.Fill(ds, "Zip");
+
+            return ds.Tables["Zip"];
+        }
+
     }
 }
