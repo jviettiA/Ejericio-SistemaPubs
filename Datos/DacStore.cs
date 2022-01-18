@@ -4,11 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Models;
+using System.Data.SqlClient;
+using Datos.Servidor;
 
 namespace Datos
 {
     public static class DacStore
     {
+
+        static SqlCommand comando;
 
         public static List<Store> Listar()
         {
@@ -31,20 +35,61 @@ namespace Datos
 
         public static int Insertar(Store store)
         {
-            //TODO
-            return 0;
+          
+            string consultaSQL = "INSERT INTO [dbo].[stores]([stor_id],[stor_name],[stor_address],[city],[state],[zip])VALUES(@storid,@storname,@storaddress,@city,@state,@zip)";
+
+            comando = new SqlCommand(consultaSQL, AdminDB.ConectarBaseDatos());
+
+            comando.Parameters.Add("@storid", System.Data.SqlDbType.Char, 4).Value = store.StorId;
+            comando.Parameters.Add("@storname", System.Data.SqlDbType.VarChar, 40).Value = store.Storname;
+            comando.Parameters.Add("@storaddress", System.Data.SqlDbType.VarChar, 40).Value = store.Storaddress;
+            comando.Parameters.Add("@city", System.Data.SqlDbType.VarChar, 20).Value = store.City;
+            comando.Parameters.Add("@state", System.Data.SqlDbType.Char, 2).Value = store.State;
+            comando.Parameters.Add("@zip", System.Data.SqlDbType.Char, 5).Value = store.Zip;
+
+            int filasAfectadas = comando.ExecuteNonQuery();
+        
+            AdminDB.ConectarBaseDatos().Close();
+            return filasAfectadas;
+        
         }
 
         public static int Actualizar(Store store)
         {
-            //TODO
-            return 0;
+            
+            string consultaSQL = "UPDATE [stores] SET [stor_name]=@stor_name ,[stor_address] = @stor_address ,[city]=@city ,[state]=@state ,[zip]=@zip WHERE stor_id=@stor_id";
+            
+            comando = new SqlCommand(consultaSQL, AdminDB.ConectarBaseDatos());
+            
+            comando.Parameters.Add("@stor_id", System.Data.SqlDbType.Char, 4).Value = store.StorId;
+            comando.Parameters.Add("@stor_name", System.Data.SqlDbType.VarChar, 40).Value = store.Storname;
+            comando.Parameters.Add("@stor_address", System.Data.SqlDbType.VarChar, 40).Value = store.Storaddress;
+            comando.Parameters.Add("@city", System.Data.SqlDbType.VarChar, 20).Value = store.City;
+            comando.Parameters.Add("@state", System.Data.SqlDbType.Char, 2).Value = store.State;
+            comando.Parameters.Add("@zip", System.Data.SqlDbType.Char, 5).Value = store.Zip;
+
+            int filasAfectadas = comando.ExecuteNonQuery(); 
+
+            AdminDB.ConectarBaseDatos().Close();
+            
+            return filasAfectadas;
         }
 
         public static int Eliminar(string id)
         {
-            //TODO
-            return 0;
+            string consultaSQL = "DELETE FROM [stores] WHERE stor_id=@stor_id";
+
+            comando = new SqlCommand(consultaSQL, AdminDB.ConectarBaseDatos());
+
+            comando.Parameters.Add("@stor_id", System.Data.SqlDbType.Char, 4).Value = id;
+
+            int filasAfectadas = comando.ExecuteNonQuery();
+
+            AdminDB.ConectarBaseDatos().Close();
+
+
+
+            return filasAfectadas;
         }
     }
 }
