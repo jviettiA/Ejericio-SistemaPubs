@@ -13,18 +13,95 @@ namespace Datos
     public static class DacStore
     {
 
+
         static SqlCommand comando;
+        static SqlDataReader reader;
 
         public static List<Store> Listar()
         {
-            //TODO
-            return null;
+            //declarar la consulta de SQL
+            string consultaSQL = "SELECT stor_id, stor_name, stor_address, city, state, zip FROM stores";
+            //crear el comando sqlcommand
+            comando = new SqlCommand(consultaSQL, AdminDB.ConectarBaseDatos());
+            //crear el objeto Reader
+            reader = comando.ExecuteReader();
+
+            //recorrer el reader
+            //crear una lista del modelo autor
+            List<Store> stores = new List<Store>();
+            while (reader.Read())
+            {
+                stores.Add(
+                    new Store()
+                    {
+                        StorId = reader["stor_id"].ToString(),
+                        Storname = reader["stor_name"].ToString(),
+                        Storaddress = reader["stor_address"].ToString(),
+                        City = reader["city"].ToString(),
+                        State = reader["state"].ToString(),
+                        Zip = reader["zip"].ToString(),
+
+                    }
+                    );
+
+            }
+            AdminDB.ConectarBaseDatos().Close();
+            reader.Close();
+
+            return stores;
         }
 
-        public static List<Store> Listar(string city, string country)
+        public static List<Store> Listar(string state)
         {
-            //TODO
-            return null;
+            //declarar la consulta de SQL
+            string consultaSQL = "SELECT stor_id, stor_name, stor_address, city, state, zip FROM stores WHERE state = @state";
+            //crear el comando sqlcommand
+            comando = new SqlCommand(consultaSQL, AdminDB.ConectarBaseDatos());
+
+
+            comando.Parameters.Add("@state", System.Data.SqlDbType.Char, 2).Value = state;
+
+            //crear el objeto Reader
+            reader = comando.ExecuteReader();
+
+            //recorrer el reader
+            List<Store> stores = new List<Store>();
+            while (reader.Read())
+            {
+                stores.Add(
+                    new Store()
+                    {
+                        StorId = reader["stor_id"].ToString(),
+                        Storname = reader["stor_name"].ToString(),
+                        Storaddress = reader["stor_address"].ToString(),
+                        City = reader["city"].ToString(),
+                        State = reader["state"].ToString(),
+                        Zip = reader["zip"].ToString(),
+
+                    }
+                    );
+
+            }
+            AdminDB.ConectarBaseDatos().Close();
+            reader.Close();
+
+            return stores;
+
+        }
+
+        public static DataTable ListarState()
+        {
+            //consulta SQL (select)
+            string SQLSelect = "SELECT DISTINCT state FROM stores";
+
+            //Adapater
+            SqlDataAdapter adapter = new SqlDataAdapter(SQLSelect, AdminDB.ConectarBaseDatos());
+
+            DataSet ds = new DataSet();
+
+            adapter.Fill(ds, "States");
+
+            return ds.Tables["States"];
 
         }
 
@@ -32,6 +109,24 @@ namespace Datos
         {
             //TODO
             return null;
+        }
+
+        public static DataTable TraerUnoDT(string storId)
+        {
+            //AGREGAR consulta SQL (select)-->WHERE aplicar por ciudad
+            string SQLSelect = "SELECT stor_id, stor_name, stor_address, city, state, zip FROM stores WHERE stor_id = @storId";
+
+            //Adapater
+            SqlDataAdapter adapter = new SqlDataAdapter(SQLSelect, AdminDB.ConectarBaseDatos());
+
+            adapter.SelectCommand.Parameters.Add("@storid", SqlDbType.Char, 4).Value = storId;
+
+            DataSet ds = new DataSet();
+
+            adapter.Fill(ds, "Store");
+
+            return ds.Tables["Store"];
+
         }
 
         public static int Insertar(Store store)

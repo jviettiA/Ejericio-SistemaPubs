@@ -10,7 +10,12 @@
       "ProjectGuid": "36ba73dc-5271-4572-b856-6dc2bca4e920",
       "DisplayName": "Datos",
       "ColorIndex": 1
+    },
+    "3a805dca-d55c-4c60-b9dc-f589798177ba": {
+      "ProjectGuid": "3a805dca-d55c-4c60-b9dc-f589798177ba",
+      "DisplayName": "Presentacion",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 3
 }

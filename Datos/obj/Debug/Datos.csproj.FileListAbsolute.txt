@@ -1,0 +1,10 @@
+C:\Users\JVIETTI\source\repos\SistemaPubs\Datos\bin\Debug\Datos.dll.config
+C:\Users\JVIETTI\source\repos\SistemaPubs\Datos\bin\Debug\Datos.dll
+C:\Users\JVIETTI\source\repos\SistemaPubs\Datos\bin\Debug\Datos.pdb
+C:\Users\JVIETTI\source\repos\SistemaPubs\Datos\bin\Debug\Models.dll
+C:\Users\JVIETTI\source\repos\SistemaPubs\Datos\bin\Debug\Models.pdb
+C:\Users\JVIETTI\source\repos\SistemaPubs\Datos\obj\Debug\Datos.csproj.AssemblyReference.cache
+C:\Users\JVIETTI\source\repos\SistemaPubs\Datos\obj\Debug\Datos.csproj.CoreCompileInputs.cache
+C:\Users\JVIETTI\source\repos\SistemaPubs\Datos\obj\Debug\Datos.csproj.CopyComplete
+C:\Users\JVIETTI\source\repos\SistemaPubs\Datos\obj\Debug\Datos.dll
+C:\Users\JVIETTI\source\repos\SistemaPubs\Datos\obj\Debug\Datos.pdb
